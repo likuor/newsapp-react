@@ -1,12 +1,10 @@
 import { Navbar } from './components/Navbar';
-import { Category } from './components/Category';
-import { ApiQuery } from './components/ApiQuery';
+import { ApiQuery } from './components/NewsList';
 
 function App() {
   return (
     <div className='App'>
       <Navbar />
-      <Category />
       <ApiQuery />
 
       <p>NewsApp</p>

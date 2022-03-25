@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
+import { Category } from './Category';
 
 import { makeStyles } from '@material-ui/core/styles';
 import ImageList from '@material-ui/core/ImageList';
@@ -31,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
 export const ApiQuery = (async) => {
   const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
   const API_URL = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${API_KEY}`;
-  console.log(API_URL);
   const [newsList, setNewsList] = useState([]);
   const classes = useStyles();
 
@@ -52,7 +52,9 @@ export const ApiQuery = (async) => {
     <div className={classes.root}>
       <ImageList className={classes.imageList}>
         <ImageListItem key='Subheader' cols={2} style={{ height: 'auto' }}>
-          <ListSubheader component='div'>December</ListSubheader>
+          <ListSubheader component='div'>
+            <Category />
+          </ListSubheader>
         </ImageListItem>
         {newsList.map((item, index) => (
           <ImageListItem key={index} style={{ height: '20vw' }}>
