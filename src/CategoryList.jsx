@@ -1,9 +1,5 @@
 export const CategoryList = [
   {
-    category: 'General',
-    url: 'general',
-  },
-  {
     category: 'Business',
     url: 'business',
   },
@@ -12,16 +8,20 @@ export const CategoryList = [
     url: 'entertainment',
   },
   {
+    category: 'General',
+    url: 'general',
+  },
+  {
+    category: 'Health',
+    url: 'health',
+  },
+  {
     category: 'Science',
     url: 'science',
   },
   {
     category: 'Sports',
     url: 'sports',
-  },
-  {
-    category: 'Health',
-    url: 'health',
   },
   {
     category: 'Technology',
