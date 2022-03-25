@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
 import { Category } from './Category';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,9 +28,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ApiQuery = (async) => {
+export const NewsList = (async) => {
   const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
-  const API_URL = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${API_KEY}`;
+  const API_URL = `https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=${API_KEY}`;
   const [newsList, setNewsList] = useState([]);
   const classes = useStyles();
 
