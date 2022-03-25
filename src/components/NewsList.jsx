@@ -58,28 +58,26 @@ export const ApiQuery = (async) => {
         </ImageListItem>
         {newsList.map((item, index) => (
           <ImageListItem key={index} style={{ height: '20vw' }}>
-            {/* <Link to={item.url}> */}
-            {/* <a href={item.url}> */}
-            <img
-              className={classes.img}
-              src={item.urlToImage}
-              alt={item.title}
-            />
-            <ImageListItemBar
-              title={item.title}
-              subtitle={<span>{item.description}</span>}
-              actionIcon={
-                <IconButton
-                  aria-label={`info about ${item.title}`}
-                  className={classes.icon}
-                  href='#'
-                >
-                  <BookmarkIcon />
-                </IconButton>
-              }
-            />
-            {/* </a> */}
-            {/* </Link> */}
+            <a href={item.url}>
+              <img
+                className={classes.img}
+                src={item.urlToImage}
+                alt={item.title}
+              />
+
+              <ImageListItemBar
+                title={item.title}
+                subtitle={<span>{item.description}</span>}
+                actionIcon={
+                  <IconButton
+                    aria-label={`info about ${item.title}`}
+                    className={classes.icon}
+                  >
+                    <BookmarkIcon />
+                  </IconButton>
+                }
+              />
+            </a>
           </ImageListItem>
         ))}
       </ImageList>
