@@ -1,30 +1,23 @@
 export const CategoryList = [
   {
-    category: 'Business',
-    url: 'business',
+    category: 'business',
   },
   {
-    category: 'Entertainment',
-    url: 'entertainment',
+    category: 'entertainment',
   },
   {
-    category: 'General',
-    url: 'general',
+    category: 'general',
   },
   {
-    category: 'Health',
-    url: 'health',
+    category: 'health',
   },
   {
-    category: 'Science',
-    url: 'science',
+    category: 'science',
   },
   {
-    category: 'Sports',
-    url: 'sports',
+    category: 'sports',
   },
   {
-    category: 'Technology',
-    url: 'technology',
+    category: 'technology',
   },
 ];
