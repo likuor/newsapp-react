@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { CategoryList } from '../CategoryList';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,19 +12,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function handleClick(event) {
-  event.preventDefault();
-  console.info('You clicked a breadcrumb.');
+  // event.preventDefault();
+  console.info(event);
 }
 
 export const Category = () => {
   const classes = useStyles();
 
   return (
-    <div role='presentation' onClick={handleClick}>
+    <div>
       <Breadcrumbs aria-label='breadcrumb'>
         {CategoryList.map((category, index) => (
           <div className={classes.root} key={index}>
-            <Button variant='outlined' color='primary' href='#outlined-buttons'>
+            <Button
+              variant='outlined'
+              color='primary'
+              href='#outlined-buttons'
+              id={category.category}
+              onClick={() => handleClick(category.category)}
+            >
               {category.category}
             </Button>
           </div>
