@@ -26,8 +26,6 @@ export const Category = (props) => {
             <Button
               variant='outlined'
               color='primary'
-              href='#outlined-buttons'
-              id={category.category}
               onClick={() => handleClick(category.category)}
             >
               {category.category}

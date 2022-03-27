@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import ListIcon from '@mui/icons-material/FormatListBulleted';
 
 export const Navbar = () => {
   return (
@@ -23,10 +22,10 @@ export const Navbar = () => {
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
             News App
           </Typography>
-          <ListIcon />
-          <Button color='inherit'>News List</Button>
-          <BookmarkIcon />
-          <Button color='inherit'>Favorite</Button>
+          <Button color='inherit'>
+            <BookmarkIcon />
+            Favorite
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>

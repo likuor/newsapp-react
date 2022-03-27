@@ -39,10 +39,10 @@ export const NewsList = (async) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getNews = (event = 'general') => {
+  const getNews = (category = 'general') => {
     const params = {
-      country: 'us',
-      category: event,
+      country: 'ca',
+      category: category,
       apiKey: API_KEY,
     };
 
@@ -60,7 +60,7 @@ export const NewsList = (async) => {
       <ImageList className={classes.imageList}>
         <ImageListItem key='Subheader' cols={2} style={{ height: 'auto' }}>
           <ListSubheader component='div'>
-            <Category getNews={getNews} test='hello' />
+            <Category getNews={getNews} />
           </ListSubheader>
         </ImageListItem>
         {newsList.map((item, index) => (
