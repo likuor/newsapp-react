@@ -11,13 +11,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function handleClick(event) {
-  // event.preventDefault();
-  console.info(event);
-}
-
-export const Category = () => {
+export const Category = (props) => {
   const classes = useStyles();
+
+  function handleClick(event) {
+    props.getNews(event);
+  }
 
   return (
     <div>

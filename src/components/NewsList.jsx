@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Category } from './Category';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const NewsList = (async) => {
   const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
-  const API_URL = `https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=${API_KEY}`;
+  const API_URL = `https://newsapi.org/v2/top-headlines`;
   const [newsList, setNewsList] = useState([]);
   const classes = useStyles();
 
@@ -39,8 +39,16 @@ export const NewsList = (async) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getNews = () => {
-    fetch(API_URL)
+  const getNews = (event = 'general') => {
+    const params = {
+      country: 'us',
+      category: event,
+      apiKey: API_KEY,
+    };
+
+    const query_params = new URLSearchParams(params);
+
+    fetch(`${API_URL}?${query_params}`)
       .then((response) => response.json())
       .then((data) => {
         setNewsList([...data.articles]);
@@ -52,7 +60,7 @@ export const NewsList = (async) => {
       <ImageList className={classes.imageList}>
         <ImageListItem key='Subheader' cols={2} style={{ height: 'auto' }}>
           <ListSubheader component='div'>
-            <Category />
+            <Category getNews={getNews} test='hello' />
           </ListSubheader>
         </ImageListItem>
         {newsList.map((item, index) => (
