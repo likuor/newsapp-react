@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Category } from './Category';
+import Favorite from './Favorite';
 
 import { makeStyles } from '@material-ui/core/styles';
 import ImageList from '@material-ui/core/ImageList';
@@ -28,11 +29,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const NewsList = (async) => {
+export const NewsList = (props) => {
   const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
   const API_URL = `https://newsapi.org/v2/top-headlines`;
   const [newsList, setNewsList] = useState([]);
   const classes = useStyles();
+  const favoriteArticles = [];
 
   useEffect(() => {
     getNews();
@@ -55,8 +57,14 @@ export const NewsList = (async) => {
       });
   };
 
+  function addFavorite(article) {
+    favoriteArticles.push(article);
+    console.log(favoriteArticles);
+  }
+
   return (
     <div className={classes.root}>
+      <Favorite />
       <ImageList className={classes.imageList}>
         <ImageListItem key='Subheader' cols={2} style={{ height: 'auto' }}>
           <ListSubheader component='div'>
@@ -71,20 +79,20 @@ export const NewsList = (async) => {
                 src={item.urlToImage}
                 alt={item.title}
               />
-
-              <ImageListItemBar
-                title={item.title}
-                subtitle={<span>{item.description}</span>}
-                actionIcon={
-                  <IconButton
-                    aria-label={`info about ${item.title}`}
-                    className={classes.icon}
-                  >
-                    <BookmarkIcon />
-                  </IconButton>
-                }
-              />
             </a>
+            <ImageListItemBar
+              title={item.title}
+              subtitle={<span>{item.description}</span>}
+              actionIcon={
+                <IconButton
+                  aria-label={`info about ${item.title}`}
+                  className={classes.icon}
+                  onClick={() => addFavorite(item)}
+                >
+                  <BookmarkIcon />
+                </IconButton>
+              }
+            />
           </ImageListItem>
         ))}
       </ImageList>
