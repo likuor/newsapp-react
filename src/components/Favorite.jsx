@@ -1,8 +1,11 @@
+import React from "react";
+
 function Favorite(props) {
+
   return (
-    <div>
-      <div>Favorite</div>
-    </div>
+      <div>
+          {props.favorites.map((item, index) => <div key={index}>{item.title}</div>)}
+      </div>
   );
 }
 

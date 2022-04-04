@@ -6,22 +6,8 @@ import { NewsList } from './components/NewsList';
 import Favorite from './components/Favorite';
 import { NewsProvider } from './context/context';
 
-export const ArticleContext = React.createContext();
-
 function App() {
-  // const initialState = {
-  //   count: 100,
-  // };
 
-  // const reducer = (state, action) => {
-  //   if (action === 'INCREMENT') {
-  //     return { count: state.count + 1 };
-  //   } else {
-  //     return { count: state.count - 1 };
-  //   }
-  // };
-
-  // const [state, dispatch] = useReducer(reducer, initialState);
   const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
   const API_URL = `https://newsapi.org/v2/top-headlines`;
   const [newsList, setNewsList] = useState([]);
@@ -30,7 +16,6 @@ function App() {
 
   useEffect(() => {
     getNews();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getNews = (category = 'general') => {
@@ -44,38 +29,41 @@ function App() {
     fetch(`${API_URL}?${query_params}`)
       .then((response) => response.json())
       .then((data) => {
-        setNewsList([...data.articles]);
+        const dataWithId = data.articles.map((x, index) => {
+          x.id = index;
+          return x
+        })
+        setNewsList(dataWithId);
       });
   };
 
-  const updateItems = (updatedItems) => {
-    console.log(updateItems);
-    setFavorites(updatedItems);
+  const updateItems = (favorites) => {
+    setFavorites(favorites);
   };
 
   return (
     <div className='App'>
-      {/* <ArticleContext.Provider value={{ state, dispatch }}> */}
       <NewsProvider>
-        <Navbar />
+        <Navbar favorites={favorites}/>
         <Routes>
           <Route
-            index
+              exact
+            path='/'
             element={
               <NewsList
                 newsList={newsList}
                 updateItems={updateItems}
                 getNews={getNews}
+                favorites={favorites}
               />
             }
           />
           <Route
             path='/favorite'
-            element={<Favorite favorties={favorites} />}
+            element={<Favorite favorites={favorites}/>}
           />
         </Routes>
       </NewsProvider>
-      {/* </ArticleContext.Provider> */}
     </div>
   );
 }
