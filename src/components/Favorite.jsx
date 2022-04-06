@@ -3,7 +3,9 @@ import React from 'react';
 function Favorite(props) {
   return (
     <div>
-      <div>{props.test}</div>
+      {props.favorites.map((item, index) => (
+        <div key={index}>{item.title}</div>
+      ))}
     </div>
   );
 }

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Category } from './Category';
-import Favorite from './Favorite';
 
 import { makeStyles } from '@material-ui/core/styles';
 import ImageList from '@material-ui/core/ImageList';
@@ -9,6 +8,8 @@ import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
+
+export const ArticlesContext = React.createContext();
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,71 +31,63 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const NewsList = (props) => {
-  const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
-  const API_URL = `https://newsapi.org/v2/top-headlines`;
-  const [newsList, setNewsList] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+
   const classes = useStyles();
-  const favoriteArticles = [];
 
-  useEffect(() => {
-    getNews();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const getNews = (category = 'general') => {
-    const params = {
-      country: 'ca',
-      category: category,
-      apiKey: API_KEY,
-    };
-
-    const query_params = new URLSearchParams(params);
-
-    fetch(`${API_URL}?${query_params}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setNewsList([...data.articles]);
-      });
+  const isChecked = (value) => {
+    return favorites.some((x) => x.id === value.id);
   };
 
-  function addFavorite(article) {
-    favoriteArticles.push(article);
-    console.log(favoriteArticles);
-  }
+  const addFavoriteArticle = (article) => {
+    if (isChecked(article)) {
+      const updated = favorites.filter((x) => x.id !== article.id);
+      setFavorites(updated);
+      props.updateItems(updated);
+    } else {
+      const updated = [article, ...favorites];
+      setFavorites(updated);
+      props.updateItems(updated);
+    }
+  };
 
   return (
     <div className={classes.root}>
-      <Favorite />
       <ImageList className={classes.imageList}>
         <ImageListItem key='Subheader' cols={2} style={{ height: 'auto' }}>
           <ListSubheader component='div'>
-            <Category getNews={getNews} />
+            <Category getNews={props.getNews} />
           </ListSubheader>
         </ImageListItem>
-        {newsList.map((item, index) => (
-          <ImageListItem key={index} style={{ height: '20vw' }}>
-            <a href={item.url}>
-              <img
-                className={classes.img}
-                src={item.urlToImage}
-                alt={item.title}
+        {props.newsList.map((item, index) => {
+          const checked = isChecked(item);
+          return (
+            <ImageListItem key={index} style={{ height: '20vw' }}>
+              <a href={item.url}>
+                <img
+                  className={classes.img}
+                  src={item.urlToImage}
+                  alt={item.title}
+                />
+              </a>
+              <ImageListItemBar
+                title={item.title}
+                subtitle={<span>{item.description}</span>}
+                actionIcon={
+                  <IconButton
+                    aria-label={`info about ${item.title}`}
+                    className={classes.icon}
+                    onClick={() => addFavoriteArticle(item)}
+                  >
+                    <BookmarkIcon
+                      style={{ color: `${checked ? 'blue' : 'unset'}` }}
+                    />
+                  </IconButton>
+                }
               />
-            </a>
-            <ImageListItemBar
-              title={item.title}
-              subtitle={<span>{item.description}</span>}
-              actionIcon={
-                <IconButton
-                  aria-label={`info about ${item.title}`}
-                  className={classes.icon}
-                  onClick={() => addFavorite(item)}
-                >
-                  <BookmarkIcon />
-                </IconButton>
-              }
-            />
-          </ImageListItem>
-        ))}
+            </ImageListItem>
+          );
+        })}
       </ImageList>
     </div>
   );
