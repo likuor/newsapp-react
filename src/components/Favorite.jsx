@@ -1,11 +1,53 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
+import ImageListItemBar from '@material-ui/core/ImageListItemBar';
+import ListSubheader from '@material-ui/core/ListSubheader';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+  },
+  imageList: {
+    width: '80%',
+  },
+  img: {
+    width: '100%',
+  },
+}));
 
 function Favorite(props) {
+  const classes = useStyles();
+
   return (
-    <div>
-      {props.favorites.map((item, index) => (
-        <div key={index}>{item.title}</div>
-      ))}
+    <div className={classes.root}>
+      <ImageList className={classes.imageList}>
+        <ImageListItem key='Subheader' cols={2} style={{ height: 'auto' }}>
+          <ListSubheader component='div'></ListSubheader>
+        </ImageListItem>
+        {props.favorites.map((item, index) => {
+          return (
+            <ImageListItem key={index} style={{ height: '20vw' }}>
+              <a href={item.url}>
+                <img
+                  className={classes.img}
+                  src={item.urlToImage}
+                  alt={item.title}
+                />
+              </a>
+              <ImageListItemBar
+                title={item.title}
+                subtitle={<span>{item.description}</span>}
+              />
+            </ImageListItem>
+          );
+        })}
+      </ImageList>
     </div>
   );
 }

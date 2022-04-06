@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { NewsList } from './components/NewsList';
@@ -15,7 +14,7 @@ function App() {
 
   useEffect(() => {
     getNews();
-  }, []);
+  });
 
   const getNews = (category = 'general') => {
     const params = {
