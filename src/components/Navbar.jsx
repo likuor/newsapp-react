@@ -11,7 +11,11 @@ import IconButton from '@mui/material/IconButton';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 const useStyles = makeStyles((theme) => ({
-  button: {
+  link: {
+    textDecoration: 'none',
+  },
+  title: {
+    color: '#fff',
     textDecoration: 'none',
   },
 }));
@@ -31,9 +35,11 @@ export const Navbar = () => {
             sx={{ mr: 2 }}
           ></IconButton>
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-            News App
+            <Link to='/' className={classes.title}>
+              News App
+            </Link>
           </Typography>
-          <Link to='favorite' className={classes.button}>
+          <Link to='favorite' className={classes.link}>
             <Button color='primary' variant='contained'>
               <BookmarkIcon />
               Favorite
