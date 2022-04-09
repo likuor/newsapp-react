@@ -8,16 +8,25 @@ import axios from 'axios';
 
 function App() {
   const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
-  const API_URL = `https://newsapi.org/v2/top-headlines?country=ca&apiKey=${API_KEY}`;
+  const API_URL = `https://newsapi.org/v2/top-headlines`;
+
   const [articles, setArticles] = useState([]);
+
   useEffect(() => {
     fetchArticles();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchArticles = async () => {
+  const fetchArticles = async (category = 'general') => {
+    const params = {
+      country: 'ca',
+      category: category,
+      apiKey: API_KEY,
+    };
+    const query_params = new URLSearchParams(params);
+
     try {
-      const response = await axios.get(API_URL);
+      const response = await axios.get(`${API_URL}?${query_params}`);
       setArticles(response.data.articles);
     } catch (error) {
       console.error(error);
@@ -29,7 +38,13 @@ function App() {
       <NewsProvider>
         <Navbar />
         <Routes>
-          <Route exact path='/' element={<NewsList articles={articles} />} />
+          <Route
+            exact
+            path='/'
+            element={
+              <NewsList articles={articles} fetchArticles={fetchArticles} />
+            }
+          />
           <Route path='/favorite' element={<Favorite />} />
         </Routes>
       </NewsProvider>

@@ -38,7 +38,7 @@ export const NewsList = (props) => {
       <ImageList className={classes.imageList}>
         <ImageListItem key='Subheader' cols={2} style={{ height: 'auto' }}>
           <ListSubheader component='div'>
-            <Category getNews={props.getNews} />
+            <Category category={props.fetchArticles} />
           </ListSubheader>
         </ImageListItem>
         {props.articles.map((item, index) => {

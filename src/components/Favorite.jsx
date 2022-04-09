@@ -30,7 +30,8 @@ function Favorite(props) {
         <ImageListItem key='Subheader' cols={2} style={{ height: 'auto' }}>
           <ListSubheader component='div'></ListSubheader>
         </ImageListItem>
-        {props.favorites.map((item, index) => {
+        <p>test</p>
+        {/* {props.favorites.map((item, index) => {
           return (
             <ImageListItem key={index} style={{ height: '20vw' }}>
               <a href={item.url}>
@@ -46,7 +47,7 @@ function Favorite(props) {
               />
             </ImageListItem>
           );
-        })}
+        })} */}
       </ImageList>
     </div>
   );

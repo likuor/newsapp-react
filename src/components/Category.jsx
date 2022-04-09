@@ -15,7 +15,7 @@ export const Category = (props) => {
   const classes = useStyles();
 
   function handleClick(event) {
-    props.getNews(event);
+    props.category(event);
   }
 
   return (
