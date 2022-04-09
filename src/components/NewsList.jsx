@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Category } from './Category';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,25 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const NewsList = (props) => {
-  const [favorites, setFavorites] = useState([]);
-
   const classes = useStyles();
-
-  const isChecked = (value) => {
-    return favorites.some((x) => x.id === value.id);
-  };
-
-  const addFavoriteArticle = (article) => {
-    if (isChecked(article)) {
-      const updated = favorites.filter((x) => x.id !== article.id);
-      setFavorites(updated);
-      props.updateItems(updated);
-    } else {
-      const updated = [article, ...favorites];
-      setFavorites(updated);
-      props.updateItems(updated);
-    }
-  };
 
   return (
     <div className={classes.root}>
@@ -59,8 +41,7 @@ export const NewsList = (props) => {
             <Category getNews={props.getNews} />
           </ListSubheader>
         </ImageListItem>
-        {props.newsList.map((item, index) => {
-          const checked = isChecked(item);
+        {props.articles.map((item, index) => {
           return (
             <ImageListItem key={index} style={{ height: '20vw' }}>
               <a href={item.url}>
@@ -77,11 +58,8 @@ export const NewsList = (props) => {
                   <IconButton
                     aria-label={`info about ${item.title}`}
                     className={classes.icon}
-                    onClick={() => addFavoriteArticle(item)}
                   >
-                    <BookmarkIcon
-                      style={{ color: `${checked ? 'blue' : 'unset'}` }}
-                    />
+                    <BookmarkIcon />
                   </IconButton>
                 }
               />
