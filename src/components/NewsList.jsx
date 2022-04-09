@@ -9,6 +9,10 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 
+import { useDispatch } from 'react-redux';
+import { addFavorite } from '../store/actions/user';
+import { deleteFavorite } from '../store/actions/user';
+
 export const ArticlesContext = React.createContext();
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const NewsList = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   return (
     <div className={classes.root}>
@@ -58,6 +63,9 @@ export const NewsList = (props) => {
                   <IconButton
                     aria-label={`info about ${item.title}`}
                     className={classes.icon}
+                    onClick={() => {
+                      dispatch(addFavorite({ favorite: item }));
+                    }}
                   >
                     <BookmarkIcon />
                   </IconButton>

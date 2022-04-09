@@ -5,6 +5,8 @@ import ImageListItem from '@material-ui/core/ImageListItem';
 import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 
+import { useSelector } from 'react-redux';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -21,8 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Favorite(props) {
+function Favorite() {
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
+  const { favorites } = user;
 
   return (
     <div className={classes.root}>
@@ -30,8 +34,7 @@ function Favorite(props) {
         <ImageListItem key='Subheader' cols={2} style={{ height: 'auto' }}>
           <ListSubheader component='div'></ListSubheader>
         </ImageListItem>
-        <p>test</p>
-        {/* {props.favorites.map((item, index) => {
+        {favorites.map((item, index) => {
           return (
             <ImageListItem key={index} style={{ height: '20vw' }}>
               <a href={item.url}>
@@ -47,7 +50,7 @@ function Favorite(props) {
               />
             </ImageListItem>
           );
-        })} */}
+        })}
       </ImageList>
     </div>
   );
