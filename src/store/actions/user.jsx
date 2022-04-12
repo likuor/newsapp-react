@@ -1,5 +1,4 @@
 export const addFavorite = ({ favorite }) => {
-  console.log(favorite);
   return {
     type: 'ADD_FAVORITE',
     favorite,

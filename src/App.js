@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { NewsList } from './components/NewsList';
 import Favorite from './components/Favorite';
-import { NewsProvider } from './context/context';
 import axios from 'axios';
 
 function App() {
@@ -35,19 +34,17 @@ function App() {
 
   return (
     <div className='App'>
-      <NewsProvider>
-        <Navbar />
-        <Routes>
-          <Route
-            exact
-            path='/'
-            element={
-              <NewsList articles={articles} fetchArticles={fetchArticles} />
-            }
-          />
-          <Route path='/favorite' element={<Favorite />} />
-        </Routes>
-      </NewsProvider>
+      <Navbar />
+      <Routes>
+        <Route
+          exact
+          path='/'
+          element={
+            <NewsList articles={articles} fetchArticles={fetchArticles} />
+          }
+        />
+        <Route path='/favorite' element={<Favorite />} />
+      </Routes>
     </div>
   );
 }
