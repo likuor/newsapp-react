@@ -9,7 +9,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addFavorite } from '../store/actions/user';
 import { deleteFavorite } from '../store/actions/user';
 
@@ -37,6 +37,20 @@ const useStyles = makeStyles((theme) => ({
 export const NewsList = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const { favorites } = user;
+
+  const isFavorite = (item) => {
+    return favorites.some((favorite) => favorite.url === item.url);
+  };
+
+  const toggleFavorite = (item) => {
+    if (isFavorite(item)) {
+      dispatch(deleteFavorite({ favorite: item }));
+    } else {
+      dispatch(addFavorite({ favorite: item }));
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -47,13 +61,16 @@ export const NewsList = (props) => {
           </ListSubheader>
         </ImageListItem>
         {props.articles.map((item, index) => {
+          const checked = isFavorite(item);
+
           return (
             <ImageListItem key={index} style={{ height: '20vw' }}>
-              <a href={item.url}>
+              <a href={item.url} rel='noopener noreferrer' target='_blank'>
                 <img
                   className={classes.img}
                   src={item.urlToImage}
                   alt={item.title}
+                  target='_blank'
                 />
               </a>
               <ImageListItemBar
@@ -64,10 +81,12 @@ export const NewsList = (props) => {
                     aria-label={`info about ${item.title}`}
                     className={classes.icon}
                     onClick={() => {
-                      dispatch(addFavorite({ favorite: item }));
+                      toggleFavorite(item);
                     }}
                   >
-                    <BookmarkIcon />
+                    <BookmarkIcon
+                      style={{ color: `${checked ? 'orange' : 'unset'}` }}
+                    />
                   </IconButton>
                 }
               />

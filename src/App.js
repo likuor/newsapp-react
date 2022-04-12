@@ -4,8 +4,6 @@ import { Navbar } from './components/Navbar';
 import { NewsList } from './components/NewsList';
 import Favorite from './components/Favorite';
 import { NewsProvider } from './context/context';
-import { Provider } from 'react-redux';
-import store from './store';
 import axios from 'axios';
 
 function App() {
